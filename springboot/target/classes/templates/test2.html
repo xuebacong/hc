@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .one{
+        /*text-align: center; !*让div内部文字居中*!*/
+        background-color: #fff;
+        border-radius: 20px;
+        width: 800px;
+        height: 100%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+</style>
+<body>
+<!--<form>-->
+<!--    <input type="text" th:value="${num1}" readonly onselectable="on">-->
+<!--</form>-->
+<form>
+    <div class="one">
+        <div style="background-color: #008997" th:each="Single,state:${singleList}">
+            <textarea style="width: 100%" th:text="${Single.singleId}"></textarea><br>
+            <textarea th:text="${Single.singleQuestion}"></textarea><br>
+            <textarea></textarea><br>
+            <textarea></textarea><br>
+            <textarea></textarea><br>
+        </div><br>
+
+<!--        <div style="background-color: firebrick">-->
+<!--            <textarea style="width: 100%"></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--        </div><br>-->
+
+<!--        <div style="background-color: green">-->
+<!--            <textarea style="width: 100%"></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--        </div><br>-->
+
+<!--        <div style="background-color: yellow">-->
+<!--            <textarea style="width: 100%"></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--        </div><br>-->
+
+<!--        <div style="background-color: firebrick">-->
+<!--            <textarea style="width: 100%"></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--            <textarea></textarea><br>-->
+<!--        </div><br>-->
+    </div>
+</form>
+</body>
+</html>
+

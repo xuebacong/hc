@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>题库搜索</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/admin-main.css" type="text/css">
+    <link rel="stylesheet" href="css/css6.css" >
+
+    <style>
+
+
+    </style>
+</head>
+<body>
+<div th:replace="admin::navbar"></div>
+
+
+
+<div class="w2">
+    <div class="w1">
+        <div id="plane">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </div>
+        <div style="margin-left: 20%">
+            <select onchange="select(this)"  class="select-btn">
+                <option value="0">选择题目类型</option>
+                <option value="1">单选题</option>
+                <option value="2">多选题</option>
+                <option value="3">填空题</option>
+            </select>
+            <input type="text" placeholder="搜索题目信息" class="seach-input" id="Ques">
+            <input type="button" value="点击搜索" class="seach-btn" onclick="search()">
+        </div>
+
+
+        <form class="select-main">
+            <div class="select-test-question" id="div1" style="display: none" >
+
+                <div class="single-choice" th:each="Single,state:*{singleList}">
+                    <table style="margin-left: 15%;margin-top: 10px">
+                        <label style="font-size: 25px" class="title-name">单选题<label th:text="${state.index}+1"></label></label>
+                        <div class="border"></div>
+                        <tr>
+                            <td class="title-left"><label>题目内容</label></td>
+                            <td class="title-right"><textarea class="title-content" disabled th:text="${Single.singleQuestion}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项A</label></td>
+                            <td class="title-right"><textarea class="title-A" disabled th:text="${Single.singleA}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项B</label></td>
+                            <td class="title-right"><textarea class="title-B" disabled th:text="${Single.singleB}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项C</label></td>
+                            <td class="title-right"><textarea class="title-C" disabled th:text="${Single.singleC}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项D</label> </td>
+                            <td class="title-right"><textarea class="title-D" disabled th:text="${Single.singleD}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>参考答案</label></td>
+<!--                            <td class="title-right">-->
+<!--                                <select autofocus class="student-select">-->
+<!--                                    <option value="A">A</option>-->
+<!--                                    <option value="B">B</option>-->
+<!--                                    <option value="C">C</option>-->
+<!--                                    <option value="D">D</option>-->
+<!--                                </select>-->
+<!--                            </td>-->
+                            <td><textarea class="title-D" disabled th:text="${Single.singleAnswer}"></textarea></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+                <br><br><br>
+
+            </div>
+
+            <div class="select-test-question" style="display: none" id="div2">
+                <div class="multiple-choice" th:each="Multiple,state:*{multipleList}">
+                    <table style="margin-left: 15%;margin-top: 10px">
+                        <label style="font-size: 25px" class="title-name">多选题<label th:text="${state.index}+1"></label></label>
+                        <div class="border"></div>
+                        <tr>
+                            <td class="title-left"><label>题目内容</label></td>
+                            <td class="title-right"><textarea class="title-content" disabled th:text="${Multiple.multipleQuestion}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项A</label></td>
+                            <td class="title-right"><textarea class="title-A" disabled th:text="${Multiple.multipleA}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项B</label></td>
+                            <td class="title-right"><textarea class="title-B" disabled th:text="${Multiple.multipleB}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项C</label></td>
+                            <td class="title-right"><textarea class="title-C" disabled th:text="${Multiple.multipleC}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>选项D</label> </td>
+                            <td class="title-right"><textarea class="title-D" disabled th:text="${Multiple.multipleD}"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>参考答案</label></td>
+                            <td class="title-right">
+                                <textarea class="title-D" disabled th:text="${Multiple.multipleAnswer}"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <br><br><br>
+            </div>
+
+            <div class="select-test-question" style="display: none" id="div3">
+
+                <div class="fill-in-the-blanks" th:each="Fill,state:*{fillList}">
+                    <table style="margin-left: 15%;margin-top: 10px">
+                        <label style="font-size: 25px" class="title-name">填空题<label th:text="${state.index}+1"></label></label>
+                        <div class="border"></div>
+                        <tr>
+                            <td class="title-left"><label>题目内容</label></td>
+                            <td class="title-right">
+                                <textarea class="title-content" disabled th:text="${Fill.fillQuestion}"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title-left"><label>你的答案</label></td>
+                            <td class="title-right">
+                                <textarea class="title-D" disabled th:text="${Fill.fillAnswer}"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <br><br><br>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--<script src="js/jquery-3.2.1.min.js"></script>-->
+<!--<script src="js/bootstrap-js/bootstrap.min.js"></script>-->
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function search(){
+        var Ques=$("#Ques").val();
+        Ques='\''+Ques+'\'';
+        // alert(Ques);
+        // $.ajax({
+        //     url:"/searchQuestion?Ques="+Ques,
+        //     type:"get"
+        // })
+        window.location.href="/searchQuestion?Ques="+Ques;
+    }
+    function select(obj){
+        $("#div" + obj.value).show().siblings().hide();
+    }
+
+    //飞机
+    let plane=document.getElementById('plane');
+    let deg=0,ex=0,ey=0,vx=0,vy=0,count=0;
+    window.addEventListener('mousemove',(e)=>{
+        ex=e.x-plane.offsetLeft*1.8-plane.clientWidth/2;
+        ey=e.y-plane.offsetTop-plane.clientHeight/2;
+        deg=360*Math.atan(ey/ex)/(2*Math.PI)+45;
+        if (ex<0){
+            deg+=180;
+        }
+        count=0;
+    })
+    function draw(){
+        plane.style.transform='rotate('+deg+'deg)';
+        if(count<100){
+            vx+=ex/100;
+            vy+=ey/100;
+        }
+        plane.style.left=vx+'px';
+        plane.style.top=vy+'px';
+        count++;
+    }
+    setInterval(draw,1);
+
+    //返回顶部
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>100题库后台首页</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin-main.css">
+</head>
+<body>
+<!--侧边栏-->
+<div class="list" th:fragment="navbar">
+    <nav class="shell">
+        <div>
+            <img src="img/logo.png"  style="width: 90%;height: 80px;margin-bottom: -50px;border-radius: 20px ;margin-left: 10px;margin-top: 6px">
+        </div>
+        <ul class="buttons">
+            <li class="li-admin">
+                <span>欢迎您！管理员</span>
+            </li>
+            <br>
+            <li class="li">
+                <a href="/toAdmin" class="a-return">首页</a>
+            </li>
+            <li class="li">
+                题目管理
+                <ul>
+                    <li ><a href="/findSingle">单选题</a></li>
+                    <li><a href="/findMultiple">多选题</a></li>
+                    <li><a href="/findFill">填空题</a></li>
+                    <li><a href="/searchQuestion">搜索</a></li>
+                </ul>
+            </li>
+            <li class="li">
+                试卷管理
+                <ul>
+                    <li><a href="/findTest">试题编辑</a></li>
+                    <li><a href="/addTest">发布试题</a></li>
+                </ul>
+            </li>
+<!--            <li class="li">-->
+<!--                <a href="index.html" class="a-return">学生管理</a>-->
+<!--            </li>-->
+            <li class="li">
+                <a href="/findGrade" class="a-return">成绩管理</a>
+            </li>
+
+
+<!--            <li class="li">-->
+<!--                <a href="admin-update-information.html" class="a-return">修改信息</a>-->
+<!--            </li>-->
+            <li class="li">
+                <a href="/exitAdmin" class="a-return">退出登录</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="w2">
+    <div class="w1">
+        这里是管理员首页
+    </div>
+</div>
+</body>
+</html>

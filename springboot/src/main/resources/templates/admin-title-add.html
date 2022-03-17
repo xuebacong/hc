@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>增添试卷</title>
+    <link rel="stylesheet" href="css/admin-main.css" type="text/css">
+    <link rel="stylesheet" href="css/css5.css">
+
+    <style>
+
+    </style>
+</head>
+<body>
+<div th:replace="admin::navbar"></div>
+    <div class="w2">
+        <div class="w1">
+            <div class="title-add">
+                <h2 style="text-align: center">增添题库试卷</h2>
+                <div class="border"></div>
+                <div class="add-title-div">
+                    <span>添加试卷名</span>
+                    <input id="normalTestName"type="text" class="add-title-text" placeholder="添加的试卷名称">
+                    <div style="margin-left: 35%">
+                        <button class="add-title-btn" onclick="createNormalTest1()">随机生成</button>
+<!--                        <button class="add-title-btn">手动添加</button>-->
+                    </div>
+
+                </div>
+            </div>
+            <div class="exam-add">
+                <h2 style="text-align: center">增添在线考试</h2>
+                <div class="border"></div>
+                <div class="add-exam-div">
+                    <span>添加考试名</span>
+                    <input id="onlineTestName"type="text" class="add-exam-text" placeholder="添加的考试名称">
+                    <span>考试开始时间</span>
+                    <input id="onlineStartTime"type="datetime-local" step="1" class="form-control add-exam-text" >
+                    <span>考试结束时间</span>
+                    <input id="onlineEndTime"type="datetime-local" step="1" class="form-control add-exam-text" >
+                    <div style="margin-left: 35%">
+                        <button class="add-exam-btn" onclick="createOnlineTest1()">随机生成</button>
+<!--                        <button class="add-exam-btn">手动添加</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script th:inline="javascript">
+    function createNormalTest1(){
+        var testNmae=$("#normalTestName").val();
+        $.ajax({
+            url:"createNormalTest1",
+            type: "get",
+            data:{"testName":testNmae},
+            success:function (a){
+                if(a==1){
+                    alert("添加题库试题成功");
+                    window.location.href="/addTest";
+                }else{
+                    alert("添加题库试题失败");
+                    window.location.href="/addTest";
+                }
+            }
+        })
+    }
+    function createOnlineTest1(){
+        var testName=$("#onlineTestName").val();
+        var startTime=$("#onlineStartTime").val();
+        var endTime=$("#onlineEndTime").val();
+        $.ajax({
+            url:"createOnlineTest1",
+            type:"get",
+            data:{"testName":testName,"startTTime":startTime,"endTTime":endTime},
+            success:function (a){
+                if(a==1){
+                    alert("创建在线考试成功")
+                    window.location.href="/addTest";
+                }else{
+                    alert("创建在线考试失败")
+                    window.location.href="/addTest";
+                }
+            }
+        })
+    }
+</script>
+
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

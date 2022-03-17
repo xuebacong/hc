@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>单选题</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin-main.css" type="text/css">
+</head>
+<body>
+
+<div th:replace="admin::navbar"></div>
+
+<!--右边的内容-->
+<div class="w2">
+    <div class="w1">
+        请输入考试名称<input type="text" id="myName"><button th:onclick="find()">搜索</button>
+        <table class="table table-hover table-bordered">
+            <tr hidden><td><a  th:value="${testName}" id="name"></a></td></tr>
+            <tr>
+                <th style="width: 15%;height: 60px">序号</th>
+                <th style="width: 15%">考试名称</th>
+                <th style="width: 15%">用户名</th>
+                <th style="width: 20%">考试日期</th>
+                <th style="width: 15%">成绩</th>
+                <th >按钮</th>
+
+            </tr>
+            <tr th:each="GradePro,state:${myPage.rows}">
+                <td id="index" th:text="(${myPage.current-1})*${myPage.getPageSize()}+${state.index}+1" ></td>
+                <td><textarea disabled style="width: 100%" th:text="${GradePro.testName}"></textarea></td>
+                <td><textarea disabled style="width: 100%" th:text="${GradePro.uname}"></textarea></td>
+                <td><textarea disabled style="width: 100%" th:text="${GradePro.testDay}"></textarea></td>
+                <td><textarea disabled style="width: 100%" th:text="${GradePro.grade}"></textarea></td>
+                <td>
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" th:onclick="edit([[${GradePro.uname}]])">编辑</button>
+                    <button class="btn btn-primary btn-lg" th:onclick="deleteGrade([[${GradePro.uname}]])">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    当前页数<a th:text="'    '+${myPage.current}"></a><a>/</a><a th:text="${myPage.totalPages}"></a>
+                </td>
+                <td>
+                    <button  >
+                        <a th:href="@{'findGrade?current='+1+'&testName='+${testName}}" >首页</a>
+                    </button >
+
+                    <button >
+                        <a  th:href="@{'findGrade?current='+${myPage.current-1}+'&testName='+${testName}}">上一页</a>
+                    </button>
+                    </td>
+                <td>
+
+<!--                    <input type="number" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"  min=1 step =1 style="width:50px;border: solid black"-->
+<!--                           name="current" id="current" th:value="${myPage.current}">-->
+<!--                    <button type="submit" th:onclick="skipTo()" >跳转到</button>-->
+                    </td>
+                <td>
+
+                    <button>
+                        <a  th:href="@{'findGrade?current='+${myPage.current+1}+'&testName='+${testName}}">下一页</a>
+                    </button>
+
+                    <button>
+                        <a  th:href="@{'findGrade?current='+${myPage.totalPages}+'&testName='+${testName}}">尾页</a>
+                    </button>
+                    </td>
+
+                <td>
+<!--                    <button  class=" btn-primary " data-toggle="modal" data-target="#insertModal" style="height: 25px;width:100%">-->
+<!--                        增加试题-->
+<!--                    </button>-->
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<!--bootstrap模态框,编辑-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" >
+                    成绩详情
+                </h4>
+            </div>
+            <div class="modal-body">
+<!--                试题编号：<br><textarea disabled style="height: 30px;width:50px" id="id"></textarea><br>-->
+<!--                题干：<br><textarea style="height:110px;width:300px" id="question"></textarea><br>-->
+<!--                选项A:<br><textarea style="width: 300px" id="A"></textarea><br>-->
+<!--                选项B:<br><textarea style="width: 300px" id="B"></textarea><br>-->
+<!--                选项C:<br><textarea style="width: 300px" id="C"></textarea><br>-->
+<!--                选项D:<br><textarea style="width: 300px" id="D"></textarea><br>-->
+<!--                参考答案:<br><textarea style="width: 100px;height: 35px" id="answer"></textarea><br>-->
+               考试名称：<br><textarea disabled style="height: 30px;width:100px" id="myTestName"></textarea><br>
+               用户名：<br><textarea disabled style="height:30px;width:100px" id="myUname"></textarea><br>
+               成绩:<br><textarea style="width: 100px" id="myGrade"></textarea><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" th:onclick="save()">
+                    提交更改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--&lt;!&ndash;bootstrap模态框，添加&ndash;&gt;-->
+<!--<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+<!--                    &times;-->
+<!--                </button>-->
+<!--                <h4 class="modal-title" >-->
+<!--                    添加试题-->
+<!--                </h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                &lt;!&ndash;                试题编号：<br><textarea disabled style="height: 30px;width:50px" id="insertId"></textarea><br>&ndash;&gt;-->
+<!--                题干:<br><textarea style="height:110px;width:300px" id="insertQuestion"></textarea><br>-->
+<!--                选项A:<br><textarea style="width: 300px" id="insertA"></textarea><br>-->
+<!--                选项B:<br><textarea style="width: 300px" id="insertB"></textarea><br>-->
+<!--                选项C:<br><textarea style="width: 300px" id="insertC"></textarea><br>-->
+<!--                选项D:<br><textarea style="width: 300px" id="insertD"></textarea><br>-->
+<!--                参考答案:<br>-->
+<!--                &lt;!&ndash;                <textarea style="width: 100px;height: 35px" id="insertAnswer"></textarea><br>&ndash;&gt;-->
+<!--                <select id="insertAnswer">-->
+<!--                    <option value="A">A</option>-->
+<!--                    <option value="B">B</option>-->
+<!--                    <option value="C">C</option>-->
+<!--                    <option value="D">D</option>-->
+<!--                </select>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">关闭-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-primary" th:onclick="insertSingle()">-->
+<!--                    提交试题-->
+<!--                </button>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+
+<!--用于单选题编辑修改删除的js-->
+<script th:inline="javascript">
+    function find(){
+
+        var testName=$("#myName").val();
+        window.location.href="/findGrade?testName="+testName;
+    }
+
+    function edit(uname){
+        var testName=[[${testName}]];
+        // alert(uname+testName);
+        $.ajax({
+            url:"/findOneGrade?testName="+testName+"&uname="+uname,
+            type:"get",
+            dataType:"json",
+            success:function (GradePro){
+                $("#myTestName").val(GradePro.testName);
+                $("#myUname").val(GradePro.uname);
+                $("#myGrade").val(GradePro.grade);
+            }
+
+        })
+    }
+    function save(){
+
+         var index =[[${myPage.current}]];
+        // var testName=$("#MyTestName").val();
+        var testName=[[${testName}]];
+        var myUname=$("#myUname").val();
+        var myGrade=$("#myGrade").val();
+        $.ajax({
+            url:"/updateGrade/",
+            type:"post",
+            data:{"testName":testName,"uname":myUname,"grade":myGrade},
+            success:function (a){
+                if (a==1){
+                    alert("修改成功");
+                }else{
+                    alert("修改失败");
+                }
+                window.location.href="/findGrade?current="+index+"&testName="+testName;
+            }
+        })
+    }
+    function deleteGrade(uname){
+        var index =[[${myPage.current}]];
+        var testName=[[${testName}]];
+        if(window.confirm("确定删除吗？")){
+            $.ajax({
+                url:"/deleteGrade?testName="+testName+"&uname="+uname,
+                type:"get",
+                dataType:"json",
+                success:function (flag){
+                    if(flag==1)
+                        alert("成功了")
+                    window.location.href="/findGrade?current="+index+"&testName="+testName;
+                }
+            })
+        }
+    }
+    // function skipTo(){
+    //     var current = $("#current").val();
+    //     window.location.href="/findSingle?current="+current;
+    // }
+    // function insertSingle(){
+    //     var insertQuestion = $("#insertQuestion").val();
+    //     var insertA = $("#insertA").val();
+    //     var insertB = $("#insertB").val();
+    //     var insertC = $("#insertC").val();
+    //     var insertD = $("#insertD").val();
+    //     var insertAnswer=$("#insertAnswer").val();
+    //     var index = [[${myPage.current}]];
+    //     $.ajax({
+    //         url:"/insertSingle/",
+    //         type:"post",
+    //         data:{"singleQuestion":insertQuestion,"singleA":insertA,"singleB":insertB,"singleC":insertC,"singleD":insertD,"singleAnswer":insertAnswer},
+    //         success:function (a){
+    //             if (a!=0){
+    //                 alert("添加成功");
+    //             }
+    //             window.location.href="/findSingle?current="+index;
+    //         }})
+    // }
+</script>
+
+</html>

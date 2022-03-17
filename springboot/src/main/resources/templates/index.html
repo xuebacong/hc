@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--    <meta http-equiv="refresh" content="0,main.html">-->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--<body>-->
+<!--<a href="/findSingle">点我</a><br>-->
+<!--&lt;!&ndash;<a href="/num">数字</a><br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="/allUser">展示用户</a>&ndash;&gt;-->
+<!--<a href="/reg">登录注册</a><br>-->
+<!--<input type="text" id="testName">请输入试卷名<br>-->
+<!--<button th:onclick="createTest()" >随机创建一张试卷</button><br>-->
+<!--<a href="/test2">测试</a><br>-->
+<!--<button onclick="fun1()">按钮一</button>-->
+<!--<button onclick="fun2()">按钮二</button>-->
+<!--<button onclick="fun3()">按钮三</button>-->
+<!--<form action="exam" method="post" style="text-align:center;margin: 0 auto;margin-top: 5%">-->
+<!--    <input name="name">-->
+
+<!--    <div id="one">-->
+<!--    <input name="exams[0].id">-->
+<!--    1<input type="checkbox" name="exams[0].answer[]"  title="写作" value="写作">-->
+<!--    <input type="checkbox" name="exams[0].answer[]"  title="阅读" value="阅读">-->
+<!--    <input type="checkbox" name="exams[0].answer[]"  title="游戏" value="游戏">-->
+<!--    </div>-->
+
+<!--    <div id="two">-->
+<!--    <input name="exams[1].id">-->
+<!--    2<input type="checkbox" name="exams[1].answer[]"  title="写作" value="写作">-->
+<!--    <input type="checkbox" name="exams[1].answer[]"  title="阅读" value="阅读">-->
+<!--    <input type="checkbox" name="exams[1].answer[]"  title="游戏" value="游戏">-->
+<!--    </div>-->
+
+<!--    <div id="three">-->
+<!--    <input name="exams[2].id">-->
+<!--    3<input type="checkbox" name="exams[2].answer[]"  title="写作" value="写作">-->
+<!--    <input type="checkbox" name="exams[2].answer[]"  title="阅读" value="阅读">-->
+<!--    <input type="checkbox" name="exams[2].answer[]"  title="游戏" value="游戏">-->
+<!--    </div>-->
+
+<!--    <button type="submit">提交</button>-->
+<!--</form>-->
+
+<!--<button><a href="/wrongQues">查看成绩</a></button>-->
+<!--<button><a href="/userMain">查看用户首页</a></button>-->
+<!--</body>-->
+<script th:inline="javascript">
+    window.location.href="/reg";
+    function fun1(){
+        document.getElementById("two").style.display="none";
+    }
+    function createTest(){
+        var testName =$("#testName").val();
+        $.ajax({
+            url:"/createTest/",
+            type:"get",
+            data:{"testName":testName},
+            success:function (a) {
+                if(a==1){
+                    alert("添加成功");
+                }else{
+                    alert("添加失败");
+                }
+            }
+        })
+    }
+</script>
+</html>

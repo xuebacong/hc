@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--    ok-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css2.css">
+    <title>用户首页</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+<div th:fragment="navbar">
+        <header class="header">
+            <section class="header-wrap">
+                <div class="header-loge"></div>
+                <nav class="header-nav">
+                    <a href="/userMain" class="header-nav-item header-nav-item-status-active" style="text-decoration:none">回到首页</a>
+                    <a href="/userNormalMain" class="header-nav-item" style="text-decoration:none">进入题库</a>
+                    <a href="/wrongQues" class="header-nav-item" style="text-decoration:none" >查询成绩</a>
+                    <a href="/failList" class="header-nav-item" style="text-decoration:none">错 题 集</a>
+                    <a href="/updateInfo" class="header-nav-item" style="text-decoration:none">个人信息</a>
+                    <a href="/userExamMain" class="header-nav-item header-nav-item-study-now" id="exam">参加考试</a>
+                    <section class="header-nav-tip"></section>
+                </nav>
+            </section>
+        </header>
+</div>
+        <div class="screen-practice-courses">
+            <section class="screen" id="study">
+                <section class="container">
+                    <h2 class="screen-heading screen-heading-animate-init">欢迎来到学生首页</h2>
+                    <p class="screen-heading-descrip screen-heading-descrip-animate-init">一起学习一起进步吧！</p>
+                </section>
+            </section>
+        </div>
+
+
+    <script type="text/javascript" src="js/user-main.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--    <script src="js/bootstrap-js/bootstrap.min.js"></script>-->
+</body>
+</html>

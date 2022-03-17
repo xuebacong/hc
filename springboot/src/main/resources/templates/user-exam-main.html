@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--    ok-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css3.css">
+    <title>考试界面</title>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<!--<div>-->
+<!--    <div>-->
+<!--        <header class="header">-->
+<!--            <section class="header-wrap">-->
+<!--                <div class="header-loge">C++题库</div>-->
+<!--                <nav class="header-nav">-->
+<!--                    <a href="user-main.html" class="header-nav-item header-nav-item-status-active" style="text-decoration:none">回到首页</a>-->
+<!--                    <a href="title-base-main.html" class="header-nav-item" style="text-decoration:none">进入题库</a>-->
+<!--                    <a href="user-score-query.html" class="header-nav-item" style="text-decoration:none">查询成绩</a>-->
+<!--                    <a href="#" class="header-nav-item" style="text-decoration:none">错 题 集</a>-->
+<!--                    <a href="user-update-information.html" class="header-nav-item" style="text-decoration:none">个人信息</a>-->
+<!--                    <a href="user-exam-main.html" class="header-nav-item header-nav-item-study-now" id="exam">参加考试</a>-->
+<!--                    <section class="header-nav-tip"></section>-->
+<!--                </nav>-->
+<!--            </section>-->
+<!--        </header>-->
+<!--    </div>-->
+<div th:replace="user-main::navbar"></div>
+    <div class="bodyer" style="margin-top: 10px">
+        <div class="bodyer-time" id="area">
+            <!--                悬浮框内容：时钟-->
+            <div class="time-box" id="clock">
+                <div id="time">
+                    <div>
+                        <span id="hours">00</span>
+                        <span>Hours</span>
+                    </div>
+                    <div>
+                        <span id="minutes">00</span>
+                        <span>Minutes</span>
+                    </div>
+                    <div>
+                        <span id="seconds">00</span>
+                        <span>Seconds</span>
+                    </div>
+                </div>
+            </div>
+            <!--                悬浮按钮-->
+            <div id="on" onclick="xuanfu();">
+                <p>时间</p>
+            </div>
+        </div>
+        <div class="bodyer-bg">
+            <span style="font-size: 30px;font-family: '楷体','Kristen ITC';margin-left: 44%;">考试试题</span>
+            <div class="border"></div>
+
+            <div class="exam-box" >
+
+                <div class="exam-box-card" th:each="Test,state:${onlineTest}">
+                    <div>
+<!--                        <a hidden id="testId" th:value="${Test.testId}"></a>-->
+<!--                        <a th:href="@{'enterTest?testId='+${Test.testId}}" >-->
+<!--                            <img src="img/默认试卷.png" class="exam-bg">-->
+<!--                        </a>-->
+                        <a th:onclick="enter([[${Test.testId}]],[[${session.uid}]])" >
+                            <img src="img/默认试卷.png" class="exam-bg">
+                        </a>
+                    </div>
+                    <div class="exam-box-card-title">
+                        <div class="title-border"></div>
+                        <h2 class="exam-name" th:text="${Test.testName}">试卷1</h2>
+                    </div>
+<!--                    <a  th:value="${session.uid}" id="uid"></a>-->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/user-exam-main.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+
+    function enter(testId,uid){
+
+        // alert(uid);
+        // alert(testId)
+        $.ajax({
+            url:"/checkHasTest/",
+            type:"get",
+            data:{"testId":testId,"uid":uid},
+            success:function (a){
+                if(a==1){
+                    alert("你已经考过这场考试了,请重新选择考试");
+                    window.location.href="/userExamMain";
+                }else{
+                    // $.ajax({
+                    //     url:"/enterTest?testId="+testId,
+                    //     type: "get"
+                    // })
+                    window.location.href="/enterTest?testId="+testId;
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

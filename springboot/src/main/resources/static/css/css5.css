@@ -1,0 +1,134 @@
+.w1{
+    /*表格外面的那个div*/
+    width: 900px;
+    height: 85%;
+    border: 3px solid #2aabd2;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: url("../img/admin-title-add-little-bg.png") center no-repeat;
+    background-size: cover;
+}
+
+.w2{
+    /*空余部分的大div*/
+    background: url("../img/admin-title-add-bg.png") no-repeat center;
+    background-size: cover;
+    height: 100%;
+    width: 75%;
+    margin-left: 150px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding: 20px;
+}
+
+.border{
+    height: 10px;
+    width: 80px;
+    background-color: yellow;
+    margin: 0 auto;
+    margin-top: -15px;
+}
+
+.add-title-div{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.add-title-div span{
+    font-size: 15px;
+    font-family: '楷体',"Kristen ITC";
+    margin: 0;
+    margin-left: 25%;
+}
+
+.add-title-text{
+    text-align: center;
+    border-radius: 10px;
+    display: block;
+    box-sizing: border-box;
+    margin-left: 25%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 50%;
+    border: 0;
+    background: rgb(253, 252, 252);
+    padding: 20px 0px;
+    outline: none;
+    color: #111;
+    transition: 0.5s;
+}
+.add-title-text:hover{
+    box-shadow: 0 0 10px 4px #937ae2;
+}
+
+.add-title-btn{
+    height: 50px;
+    width: 120px;
+    border-radius: 15px;
+    background-color: #8bdff8;
+    border: 1px solid #2aabd2;
+    margin-left: 55px;
+}
+
+.add-title-btn:hover{
+    background: #d8beef;
+}
+
+.add-exam-div{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    overflow-y: scroll;
+    height: 210px;
+}
+
+.add-exam-div::-webkit-scrollbar{width: 0!important}
+.add-exam-div{
+    -ms-overflow-style: none;
+}
+.add-exam-div{
+    overflow: -moz-scrollbars-none;
+}
+
+.add-exam-div span{
+    font-size: 15px;
+    font-family: '楷体',"Kristen ITC";
+    margin: 0;
+    margin-left: 25%;
+}
+
+.add-exam-text{
+    text-align: center;
+    border-radius: 10px;
+    display: block;
+    box-sizing: border-box;
+    margin-left: 25%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 50%;
+    border: 0;
+    background: rgb(253, 252, 252);
+    padding: 20px 0px;
+    outline: none;
+    color: #111;
+    transition: 0.5s;
+}
+.add-exam-text:hover{
+    box-shadow: 0 0 10px 4px #937ae2;
+}
+
+.add-exam-btn{
+    height: 50px;
+    width: 120px;
+    border-radius: 15px;
+    background-color: #8bdff8;
+    border: 1px solid #2aabd2;
+    margin-left: 55px;
+}
+
+.add-exam-btn:hover{
+    background: #d8beef;
+}

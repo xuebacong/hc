@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:填写映射当前的Mapper接口，所有的增删改查的参数和返回值类型，
+		就可以直接填写缩写，不区分大小写，直接通过方法名去找类型-->
+<mapper namespace="com.hucong.dao.UserDao">
+    <!-- sql:里面可以写入一个共同的sql代码，用于提取重复的代码。
+        要使用该代码的时候就直接使用<include>标签
+        id:为提取的sql代码，取一个id，起标识作用
+         -->
+    <select id="findAll" resultType="User">
+        select uid,uname,password from user
+    </select>
+<!--    useGeneratedKeys="true" keyProperty="id"-->
+<!--    parameterType="User"-->
+<!--    自动生成主键这里实现不了-->
+    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+        insert into user(uid,uname,password) values(#{uid},#{uname},#{password})
+    </insert>
+<!--           insert into user values(2,'hu','huhu')-->
+    <select id="enter" resultType="User" parameterType="User">
+        select * from user where uname = #{uname} and password = #{password}
+    </select>
+
+    <select id="getSingleTotal" resultType="Integer">
+        select count(*) from single
+    </select>
+    <select id="findSingle" resultType="Single">
+        select *from single limit #{startRow},#{pageSize}
+    </select>
+    <select id="findSingleById" resultType="Single">
+        select *from single where SingleId = #{id}
+    </select>
+    <update id="updateSingle" parameterType="Single">
+        update single set singleQuestion = #{singleQuestion},singleA=#{singleA},singleB=#{singleB},singleC=#{singleC},singleD=#{singleD},singleAnswer=#{singleAnswer} where singleId = #{singleId}
+    </update>
+    <delete id="deleteSingleById" parameterType="int">
+        delete from single where singleId=#{singleId}
+    </delete>
+    <insert id="insertSingle" parameterType="Single">
+        insert into single (singleId,singleQuestion,singleA,singleB,singleC,singleD,singleAnswer)
+        values
+        (#{singleId},#{singleQuestion},#{singleA},#{singleB},#{singleC},#{singleD},#{singleAnswer})
+    </insert>
+
+
+    <select id="findMultiple" resultType="Multiple">
+        select *from multiple limit #{startRow},#{pageSize}
+    </select>
+    <select id="getMultipleTotal" resultType="Integer">
+        select count(*) from multiple
+    </select>
+    <select id="findMultipleById" resultType="Multiple">
+        select *from multiple where multipleId=#{multipleId}
+    </select>
+    <update id="updateMultiple" parameterType="Multiple">
+        update multiple set multipleQuestion = #{multipleQuestion},
+                            multipleA=#{multipleA},multipleB=#{multipleB},multipleC=#{multipleC},multipleD=#{multipleD},
+                            multipleAnswer=#{multipleAnswer}
+        where multipleId = #{multipleId}
+    </update>
+    <delete id="deleteMultiple" parameterType="Integer">
+        delete from multiple where multipleId = #{multipleId}
+    </delete>
+    <insert id="insertMultiple" parameterType="Multiple">
+        insert into multiple (multipleId,multipleQuestion,multipleA,multipleB,multipleC,multipleD,multipleAnswer)
+        values
+            (#{multipleId},#{multipleQuestion},#{multipleA},#{multipleB},#{multipleC},#{multipleD},#{multipleAnswer})
+    </insert>
+
+<!--    考试相关-->
+    <insert id="createTestByName" parameterType="String">
+        insert into test (testName) values (#{testName})
+    </insert>
+    <select id="getTestIdByName" parameterType="String" resultType="Integer">
+        select (testId) from test where testName=#{testName}
+    </select>
+    <select id="getSingleByRand" resultType="Single">
+        select *from single order by rand() limit 5;
+    </select>
+    <insert id="insertTestSingle">
+        insert into testSingle values(#{testId},#{singleId})
+    </insert>
+    <select id="getMultipleByRand" resultType="Multiple">
+        select *from multiple order by rand() limit 5;
+    </select>
+    <insert id="insertTestMultiple">
+        insert into testMultiple values(#{testId},#{multipleId})
+    </insert>
+    <select id="getFillByRand" resultType="Fill">
+        select *from fill order by rand() limit 5;
+    </select>
+    <insert id="insertTestFill">
+        insert into testFill values(#{testId},#{fillId})
+    </insert>
+
+    <select id="getSingleByTestId" resultType="Single">
+        select * from testSingle a join single b on a.singleId=b.singleId where testId=#{testId};
+--             (b.singleId,singleQuestion,singleA,singleB,singleC,singleD)
+    </select>
+    <select id="getMultipleByTestId" resultType="Multiple">
+        select *from testMultiple a join multiple b on a.multipleId=b.multipleId where testId=#{testId};
+    </select>
+    <select id="getFillByTestId" resultType="Fill">
+        select *from testFill a join fill b on a.fillId=b.fillId where testId=#{testId};
+    </select>
+
+
+<!--    提交试卷之后，自动打分-->
+    <select id="getSingleAnswerById" parameterType="Integer" resultType="String">
+        select singleAnswer from single where singleId=#{singleId}
+    </select>
+    <select id="getMultipleAnswerById" parameterType="Integer" resultType="String">
+        select multipleAnswer from multiple where multipleId=#{multipleId}
+    </select>
+    <select id="getFillAnswerById" parameterType="Integer" resultType="String">
+        select fillAnswer from fill where fillId=#{fillId}
+    </select>
+    <insert id="insertGrade" >
+        insert into grade values(#{testId},#{uid},#{testDay},#{grade})
+    </insert>
+<!--    根据用户名字找用户id-->
+    <select id="getUidByUname" parameterType="String" resultType="Integer">
+        select uid from user where uname=#{uname}
+    </select>
+<!--    根据uid找到考试成绩集-->
+    <select id="getWrongQuesByUid"  resultType="WrongQues">
+        select user.uname,test.testId,test.testName,grade.testDay,grade.grade
+        from grade
+        join test on grade.testId=test.testId
+        join user on grade.uid=user.uid
+        where user.uid=#{uid}
+        limit #{startRow},#{pageSize}
+    </select>
+    <select id="getWrongQuesTotalByUid" parameterType="Integer" resultType="Integer">
+        select count(*)
+        from grade
+                 join test on grade.testId=test.testId
+                 join user on grade.uid=user.uid
+        where user.uid=#{uid}
+    </select>
+<!--    找到所有考试-->
+    <select id="getAllTest" resultType="Test">
+        select *from test;
+    </select>
+<!--    通过uid找到userinfo-->
+    <select id="getUserInfoByUid" parameterType="Integer" resultType="UserInfo">
+        select *from userinfo where uid=#{uid}
+    </select>
+<!--    通过uid找到uname-->
+    <select id="getUnameByUid" parameterType="Integer" resultType="String">
+        select uname from user where uid =#{uid}
+    </select>
+<!--    通过uname找到password-->
+    <select id="getPasswordByUname" parameterType="String" resultType="String">
+        select password from user where uname=#{uname}
+    </select>
+<!--    根据uname更新密码-->
+    <update id="updatePasswordByUname" >
+        update user set password=#{newPassword} where uname=#{uname}
+    </update>
+    <update id="updateUserInfo">
+        update userInfo set userDivision=#{userDivision},userClass=#{userClass},userSchool=#{userSchool} where uid=#{uid}
+    </update>
+
+    <insert id="createOnlineTest1" >
+        insert into test (testName,isOnline,startTime,endTime) values(#{testName},1,#{startTime},#{endTime})
+    </insert>
+    <insert id="createNormalTest1">
+        insert into test(testName,isOnline) values(#{testName},0)
+    </insert>
+
+    <insert id="insertFailSingle">
+        insert ignore into failSingle values(#{singleId},#{uid})
+    </insert>
+    <insert id="insertFailMultiple">
+        insert ignore into failMultiple values(#{multipleId},#{uid})
+    </insert>
+    <insert id="insertFailFill">
+        insert ignore into failFill values(#{fillId},#{uid})
+    </insert>
+
+    <select id="checkHasTest" resultType="Grade">
+        select *from grade where testId=#{testId} and uid=#{uid}
+    </select>
+    <select id="findFailSingleByUid" resultType="Single">
+        select
+               b.singleId,singleQuestion,singleA,singleB,singleC,singleD,singleAnswer
+        from
+             failSingle a join Single b on a.singleId = b.singleId where uid=#{uid}
+    </select>
+    <select id="findFailMultipleByUid" resultType="Multiple">
+        select
+                b.multipleId,multipleQuestion,multipleA,multipleB,multipleC,multipleD,multipleAnswer
+        from
+                failMultiple a join Multiple b on a.multipleId=b.multipleId where uid=#{uid}
+    </select>
+    <select id="findFailFillByUid" resultType="Fill">
+        select
+                b.fillId,fillQuestion,fillAnswer
+        from
+                failFill a join fill b on a.fillId=b.fillId where uid=#{uid}
+    </select>
+
+    <select id="findGradeByTestId" resultType="GradePro">
+        select a.testId,a.uid,uname,c.testName,testDay,grade from grade a left join user b on a.uid=b.uid
+                                                                          left join test c on a.testId=c.testId
+        where a.testId=#{testId}
+    </select>
+    <select id="getGradeByTestIdTotal">
+        select count(*) from grade where testId=#{testId}
+    </select>
+    <insert id="setInfoByUid">
+        insert into userinfo (uid)
+        values (#{uid});
+    </insert>
+
+
+    <select id="findSingleByQues" resultType="Single">
+        select *from single where singleQuestion like concat('%',${Ques},'%')
+    </select>
+<!-- 王格于2002年3月11日下午在其组长胡聪的指导下写成的两条mybatis映射语句，（在王格提醒下修改日期为2022年）抄的我-->
+    <select id="findMultipleByQues" resultType="Multiple">
+        select * from Multiple
+        where multipleQuestion like concat('%',${Ques},'%')
+    </select>
+
+    <select id="findFillByQues" resultType="Fill">
+        select * from fill
+        where fillQuestion like concat('%',${Ques},'%')
+    </select>
+    <select id="getGradeByTestNameTotal" parameterType="String" resultType="Integer">
+        select count(*) from grade a left join test b on a.testId=b.testId where testName=#{testName}
+    </select>
+    <select id="findGradeByTestName" resultType="GradePro">
+        select a.testId,a.uid,uname,c.testName,testDay,grade
+        from grade a left join user b on a.uid=b.uid
+        left join test c on a.testId=c.testId where c.testName=#{testName}
+        limit #{startRow},#{PageSize}
+    </select>
+    <select id="findGradeByTestNameAndUname" resultType="GradePro">
+        select a.testId,a.uid,uname,c.testName,testDay,grade
+        from grade a left join user b on a.uid=b.uid
+                     left join test c on a.testId=c.testId where c.testName=#{testName} and b.uname=#{uname}
+    </select>
+    <update id="updateGrade" >
+        update
+            grade a left join user b on a.uid=b.uid
+            left join test c on a.testId=c.testId
+            set a.grade=#{grade}
+        where c.testName=#{testName} and b.uname=#{uname}
+
+    </update>
+    <delete id="deleteGrade">
+        delete a
+        from
+        grade a left join user b on a.uid=b.uid
+        left join test c on a.testId=c.testId
+         where c.testName=#{testName} and b.uname=#{uname}
+    </delete>
+
+    <select id="getFillTotal" resultType="Integer">
+        select count(*) from fill;
+    </select>
+    <select id="findFill" resultType="Fill">
+        select *from fill limit #{startRow},#{PageSize}
+    </select>
+
+    <select id="findFillById" resultType="Fill">
+        select *from fill where fillId=#{fillId}
+    </select>
+    <update id="updateFill" parameterType="Fill">
+        update fill set fillQuestion=#{fillQuestion},fillAnswer=#{fillAnswer} where fillId=#{fillId}
+    </update>
+    <delete id="deleteFillById">
+        delete from fill where fillId=#{fillId}
+    </delete>
+    <insert id="insertFill" parameterType="Fill" >
+        insert into fill(fillQuestion,fillAnswer)  values(#{fillQuestion},#{fillAnswer})
+    </insert>
+
+    <select id="findTestTotal" resultType="Integer">
+        select count(*) from test
+    </select>
+    <select id="findTest" resultType="Test">
+        select *from test limit #{startRow},#{PageSize}
+    </select>
+    <delete id="deleteTestById">
+        delete from test where testId=#{testId}
+    </delete>
+
+    <select id="singleBeUsed" parameterType="Integer" resultType="Integer">
+
+        select testId from testSingle where singleId=#{singleId} limit 0,1
+    </select>
+    <select id="multipleBeUsed" resultType="Integer">
+        select testId from testMultiple where multipleId=#{multipleId} limit 0,1
+    </select>
+    <select id="fillBeUsed" resultType="Integer">
+        select testId from testFill where fillId=#{fillId} limit 0,1
+    </select>
+
+    <update id="changeTestStatus1">
+        update testFlag set flag=1 where testId=#{testId}
+    </update>
+    <update id="changeTestStatus2">
+        update testFlag set flag=0 where testId=#{testId}
+    </update>
+
+    <select id="checkTestBeUsed" resultType="Integer">
+        select flag from testFlag where testId=#{testId}
+    </select>
+ </mapper>

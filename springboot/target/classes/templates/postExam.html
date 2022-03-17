@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发布考试</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/admin-main.css">
+</head>
+<body>
+<div th:replace="admin::navbar">
+</div>
+<div class="w2">
+    <div class="w1">
+        发布考试
+        <button th:onclick="createTest()">输入试卷名随机生成一张试卷</button>
+        <input type="text" id="testName">
+    </div>
+</div>
+
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+    // function fun1(){
+    //     document.getElementById("two").style.display="none";
+    // }
+    function createTest(){
+        var testName =$("#testName").val();
+        $.ajax({
+            url:"/createTest/",
+            type:"get",
+            data:{"testName":testName},
+            success:function (a) {
+                if(a==1){
+                    alert("添加成功");
+                }else{
+                    alert("添加失败");
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>登录注册</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login-register-style.css}">
+<!--    <link rel="stylesheet" type="text/css" href="css/login-register-style.css">-->
+</head>
+<body>
+    <div>
+        <img th:src="@{/img/logo.png}" class="jikeying" height="130px" width="400px">
+    </div>
+    <!--登录界面整体布局-->
+    <div class="container right-panel-active">
+        <!--    注册    -->
+        <div class="container_form container--signup" >
+            <form  th:action="@{/save}"class="from" >
+                <h2 class="form_title">注册账号</h2>
+                <input type="text" placeholder="Username" class="input" name="uname" required="true">
+                <!--                <input type="email" placeholder="Email" class="input">-->
+<!--                <br>-->
+                <input type="password" placeholder="Password" class="input" name="password" required="true">
+                <br>
+                <button class="btn" type="submit">点击注册</button>
+            </form>
+        </div>
+        <!--登录-->
+        <div class="container_form container--signin">
+            <form th:action="@{/enter}" class="from" >
+                <h2 class="form_title">登陆账号</h2>
+                <input type="text" placeholder="Username" class="input" name="uname" required="true">
+                <input type="password" placeholder="Password" class="input" name="password" required="true">
+<!--                <a href="#" class="link">忘记密码</a>-->
+                <br>
+                <button class="btn" type="submit">点击登录</button>
+            </form>
+        </div>
+
+        <div class="container_overlay">
+            <div class="overlay">
+                <div class="overlay_panel overlay--left">
+                    <button class="btn" id="signin">已有账号，立即登录</button>
+                </div>
+
+                <div class="overlay_panel overlay--right">
+                    <button class="btn" id="signup">没有账号，立即注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script th:src="@{/js/login-register-script.js}"></script>
+</html>

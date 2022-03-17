@@ -1,0 +1,194 @@
+* {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d3dafa;
+    /*background: url("admin-view-bg.png")  no-repeat;*/
+}
+
+.list{
+    position: relative;
+    width: 100vw;
+    height: 100%;
+}
+
+.a-return{
+    text-decoration: none;
+    color: #fff;
+}
+
+.shell{
+    position:fixed;
+    width: 20%;
+    height: 100%;
+    background: url("../img/bg.jpg") no-repeat;
+    background-color: black;
+}
+.buttons{
+    margin: 60px 0;
+    color: #fff;
+}
+
+.btn-option{
+    letter-spacing: 2px;
+    font: 600 17px '';
+    padding: 16px 52px;
+    transition: .3s;
+    border-radius: 40px;
+    opacity: 0.3;
+    margin-left: 20px;
+}
+
+.li-admin{
+    letter-spacing: 2px;
+    font: 600 20px '';
+    padding: 16px 52px;
+    transition: .3s;
+}
+
+.li-admin::after{
+    content: '';
+    position: absolute;
+    left: 20px;
+    margin-top: -22px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+
+.li{
+    letter-spacing: 2px;
+    font: 600 17px '';
+    padding: 16px 52px;
+    transition: .3s;
+}
+.li::after{
+    content: '';
+    position: absolute;
+    left: 20px;
+    margin-top: -22px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+.buttons>li:hover{
+    background-color: #beb5df;
+}
+
+.li ul{
+    width: 0;
+    height: 100%;
+    padding: 60px 0px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    background-color: #59699b;
+    transition: .3s;
+}
+
+.li ul li{
+    padding: 16px 24px;
+    transition: .3s;
+    text-align: center;
+}
+
+.li:hover ul{
+    width: 228px;
+}
+.li ul li:hover{
+    background-color: #828eb9;
+}
+
+.view-main{
+
+    background: url("../img/admin-view-bg.png") no-repeat center;
+    background-size: 100% 100%;
+    /*background-color: #eaf6ed;*/
+    height: 100%;
+    width: 80%;
+    margin-left: 150px;
+    /*margin: auto;*/
+    position:absolute;
+    top:50%;
+    left:50%;
+    /*background-image: linear-gradient(to left , #EAD6EE,#A0F1EA,rgb(124, 241, 241),#e3a5f0,#EAD6EE);*/
+    /*background-size: 400%;*/
+    /*font-size: 20px;*/
+    /*line-height: 20px;*/
+    transform: translate(-50%,-50%);
+}
+
+.streamer-size{
+    background-image: linear-gradient(to left , #EAD6EE,#A0F1EA,rgb(124, 241, 241),#e3a5f0,#EAD6EE);
+    background-size: 400%;
+    font-size: 20px;
+    line-height: 20px;
+}
+@keyframes run{
+    100%{
+        background-position: 400% 0px;
+    }
+}
+.streamer-size:hover{
+    animation: run 4s linear 0s infinite;
+}
+
+.heading{
+     position: absolute;
+     width: 336px;
+     font-size: 42px;
+     top: 220px;
+     left: 50%;
+     margin-left: -168px;
+ }
+
+.heading-descrip{
+    position: absolute;
+    z-index: 1;
+    width: 336px;
+    left: 50%;
+    margin-left: -168px;
+    text-align: center;
+    top: 300px;
+}
+
+.w1{
+    /*表格外面的那个div*/
+    width: 900px;
+    /*margin: auto;*/
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: white;
+}
+
+.w2{
+    /*空余部分的大div*/
+    /*background: url("../img/admin-view-bg.png") no-repeat center;*/
+    background-size: 100% 100%;
+    background: white;
+    /*background-color: #eaf6ed;*/
+    height: 100%;
+    width: 80%;
+    margin-left: 150px;
+    /*margin: auto;*/
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding: 20px;
+}

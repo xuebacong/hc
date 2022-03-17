@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>多选题</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin-main.css">
+</head>
+<body>
+
+<div th:replace="admin::navbar">
+
+</div>
+
+<!--右边的内容-->
+<div class="w2">
+    <div class="w1">
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th style="width: 15%;height: 60px">序号</th>
+                <th style="width: 60%">题干</th>
+                <th >按钮</th>
+            </tr>
+            <tr th:each="Multiple,state:${myPage.rows}">
+
+                <td id="index" th:text="(${myPage.current-1})*${myPage.getPageSize()}+${state.index}+1" ></td>
+                <td><textarea disabled style="width: 100%" th:text="${Multiple.multipleQuestion}"></textarea></td>
+                <td>
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+                            th:onclick="edit([[${Multiple.multipleId}]])">编辑</button>
+                    <button class="btn btn-primary btn-lg"
+                            th:onclick="deleteMultiple([[${Multiple.multipleId}]])">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    当前页数<a th:text="'    '+${myPage.current}"></a><a>/</a><a th:text="${myPage.totalPages}"></a>
+                </td>
+                <td>
+                    <button  >
+                        <a th:href="@{'findMultiple?current='+1}" >首页</a>
+                    </button >
+                    <span style="padding-left: 40px"></span>
+                    <button >
+                        <a  th:href="@{'findMultiple?current='+${myPage.current-1}}">上一页</a>
+                    </button>
+
+                    <span style="padding-left: 70px"></span>
+                    <input type="number" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"  min=1 step =1 style="width:50px;border: solid black"
+                           name="current" id="current" th:value="${myPage.current}">
+                    <button type="submit" th:onclick="skipTo()" >跳转到</button>
+
+                    <span style="padding-left: 70px"></span>
+                    <button>
+                        <a  th:href="@{'findMultiple?current='+${myPage.current+1}}">下一页</a>
+                    </button>
+                    <span style="padding-left: 40px"></span>
+                    <button>
+                        <a  th:href="@{'findMultiple?current='+${myPage.totalPages}}">尾页</a>
+                    </button>
+
+                </td>
+                <td>
+                    <button  class=" btn-primary " data-toggle="modal" data-target="#insertModal" style="height: 25px;width:100%">
+                        增加试题
+                    </button>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+<!--bootstrap模态框,编辑-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" >
+                    试题详情
+                </h4>
+            </div>
+            <div class="modal-body">
+                试题编号：<br><textarea disabled style="height: 30px;width:50px" id="id"></textarea><br>
+                题干：<br><textarea style="height:110px;width:300px" id="question"></textarea><br>
+                选项A:<br><textarea style="width: 300px" id="A"></textarea><br>
+                选项B:<br><textarea style="width: 300px" id="B"></textarea><br>
+                选项C:<br><textarea style="width: 300px" id="C"></textarea><br>
+                选项D:<br><textarea style="width: 300px" id="D"></textarea><br>
+                参考答案:<br><textarea style="width: 100px;height: 35px" id="answer"></textarea><br>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" th:onclick="save()">
+                    提交更改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--bootstrap模态框，添加-->
+<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" >
+                    添加试题
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!--                试题编号：<br><textarea disabled style="height: 30px;width:50px" id="insertId"></textarea><br>-->
+                题干:<br><textarea style="height:110px;width:300px" id="insertQuestion"></textarea><br>
+                选项A:<br><textarea style="width: 300px" id="insertA"></textarea><br>
+                选项B:<br><textarea style="width: 300px" id="insertB"></textarea><br>
+                选项C:<br><textarea style="width: 300px" id="insertC"></textarea><br>
+                选项D:<br><textarea style="width: 300px" id="insertD"></textarea><br>
+                参考答案:<br>
+                <!--                <textarea style="width: 100px;height: 35px" id="insertAnswer"></textarea><br>-->
+                <select id="insertAnswer">
+                    <option value="AB">AB</option>
+                    <option value="AC">AC</option>
+                    <option value="AD">AD</option>
+                    <option value="BC">BC</option>
+                    <option value="BD">BD</option>
+                    <option value="CD">CD</option>
+                    <option value="ABC">ABC</option>
+                    <option value="ABD">ABD</option>
+                    <option value="ACD">ACD</option>
+                    <option value="BCD">BCD</option>
+                    <option value="ABCD">ABCD</option>
+                </select>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" th:onclick="insertMultiple()">
+                    提交试题
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!--用于单选题编辑修改删除的js-->
+<script th:inline="javascript">
+    function edit(multipleId){
+        $.ajax({
+            url:"/findMultipleById?multipleId="+multipleId,
+            type:"get",
+            dataType:"json",
+            success:function (Multiple){
+                $("#id").val(Multiple.multipleId);
+                $("#question").val(Multiple.multipleQuestion);
+                $("#A").val(Multiple.multipleA);
+                $("#B").val(Multiple.multipleB);
+                $("#C").val(Multiple.multipleC);
+                $("#D").val(Multiple.multipleD);
+                $("#answer").val(Multiple.multipleAnswer);
+            }
+        })
+    }
+    function save(){
+        var id = $("#id").val();
+        var question = $("#question").val();
+        var A = $("#A").val();
+        var B = $("#B").val();
+        var C = $("#C").val();
+        var D = $("#D").val();
+        var answer=$("#answer").val();
+        var index =[[${myPage.current}]];
+        $.ajax({
+            url:"/updateMultiple/",
+            type:"post",
+            data:{"multipleId":id,"multipleQuestion":question,"multipleA":A,"multipleB":B,"multipleC":C,"multipleD":D,"multipleAnswer":answer},
+            success:function (a){
+                if (a==1){
+                    alert("修改成功");
+                }else{
+                    alert("修改失败");
+                }
+                window.location.href="/findMultiple?current="+index;
+            }
+        })
+    }
+    function deleteMultiple(multipleId){
+        var index =[[${myPage.current}]];
+        if(window.confirm("确定删除吗？")){
+            $.ajax({
+                url:"/deleteMultiple?multipleId="+multipleId,
+                type:"get",
+                dataType:"json",
+                success:function (flag){
+                    //window.location.href="/findMultiple?current="+index;
+                    if(flag==-1)
+                    {
+                        window.location.href="/findMultiple?current="+index;
+                    }
+                    else
+                    {
+                        alert("这个题被id为"+flag+"的试卷使用请先删除这张试卷")
+                    }
+
+                }
+            })
+        }
+    }
+    function skipTo(){
+        var current = $("#current").val();
+        window.location.href="/findMultiple?current="+current;
+    }
+    function insertMultiple(){
+        var insertQuestion = $("#insertQuestion").val();
+        var insertA = $("#insertA").val();
+        var insertB = $("#insertB").val();
+        var insertC = $("#insertC").val();
+        var insertD = $("#insertD").val();
+        var insertAnswer=$("#insertAnswer").val();
+        var index = [[${myPage.current}]];
+        $.ajax({
+            url:"/insertMultiple/",
+            type:"post",
+            data:{"multipleQuestion":insertQuestion,"multipleA":insertA,"multipleB":insertB,"multipleC":insertC,"multipleD":insertD,"multipleAnswer":insertAnswer},
+            success:function (a){
+                if (a!=0){
+                    alert("添加成功");
+                }
+                window.location.href="/findMultiple?current="+index;
+            }})
+    }
+</script>
+</html>

@@ -1,0 +1,297 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    background-color: #f2f4f6;
+}
+
+.header{
+    background-color: rgba(116, 148, 201, 0.3);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.header-wrap{
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+
+.header-loge{
+    background: url("../img/logo.png") left center no-repeat;
+    width: 160px;
+    height: 40px;
+    background-size: 120px 40px;
+    position: absolute;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #fff;
+    text-indent: 50px;
+    line-height: 40px;
+    top: 50%;
+    margin-top: -20px;
+    left: 20px;
+}
+
+.header-nav{
+    position: absolute;
+    height: 40px;
+    right: 30px;
+    top:50%;
+    margin-top: -20px;
+}
+
+.header-nav-item{
+    color: #fff;
+    display: block;
+    position: relative;
+    padding-left: 40px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 40px;
+    float: left;
+}
+
+.header-nav-item:hover{
+    color: #f01400;
+    /*color:#fff;*/
+}
+
+.header-nav-item-study-now{
+    background: #f00;
+    text-align: center;
+    width: 94px;
+    border-radius: 3px;
+    padding: 0;
+    margin-left: 40px;
+}
+
+.header-nav-item-study-now:hover{
+    box-shadow: 0px 0px 10px #f06;
+    transition: all .5s;
+    color: #fff;
+}
+
+.header-nav-tip{
+    width: 48px;
+    height: 2px;
+    position: absolute;
+    background-color: #f00;
+    bottom: 0;
+    left: 0;
+    transition: all .5s;
+    margin-left: 40px;
+}
+
+.header{
+    transition: all 1s;
+}
+
+.header-status-white{
+    background-color: rgba(255,255,255,.9);
+    top:0;
+    right: 0;
+    left: 0;
+}
+
+.header-status-white .header-nav-item,
+.header-status-white .header-loge{
+    color: #000;
+}
+
+.header-status-white .header-nav-item-status-active{
+    color: #f01400;
+}
+
+.header-nav-item-status-active{
+    color: #f01400;
+}
+
+.header-status-white .header-nav-item:hover{
+    transition: all 1s;
+    color: red;
+}
+
+.header-status-white .header-nav-item-study-now:hover{
+    color: #fff;
+}
+
+.bodyer{
+    background-color: #fff;
+    height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background: url("../img/title-base-bg.png") center no-repeat ;
+    background-size: cover;
+    display: table;
+}
+
+/*悬浮栏*/
+#area{
+    position:fixed;
+    width:350px;
+    /*height: 800px;*/
+    right:-350px;
+    top:35%;
+}
+
+#clock{
+    font-family: 'Open Sans',sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 160px;
+    background-color: #060a1f;
+}
+
+#clock #time{
+    display: flex;
+}
+
+#clock #time div{
+    position: relative;
+    margin: 0 5px;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
+}
+
+#clock #time div span{
+    position: relative;
+    display: block;
+    width: 100px;
+    height: 70px;
+    background: #2196f3;
+    color: #fff;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.2);
+}
+
+#clock #time div span:nth-child(2){
+    height: 30px;
+    font-size: 0.7em;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    z-index: 9;
+    box-shadow: none;
+    background: #127fd6;
+    text-transform: uppercase;
+}
+
+#clock #time div:last-child span{
+    background: #ff006a;
+}
+
+#clock #time div:last-child span:nth-child(2){
+    background: #ec0062;
+}
+
+#area #on{
+    position: absolute;
+    /*top: 50%;*/
+    margin-top: -25%;
+    right: 100%;
+    width: 30px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: black;
+    opacity: 0.9;
+}
+
+#area #on p{
+    font-size:16px;
+    text-align:center;
+    margin-top: 1px;
+    color:#fff;
+    border: 2px black;
+}
+
+/*以下为试卷的布局*/
+.bodyer-bg{
+    /*background-color: rgb(220, 246, 214);*/
+    background: url("../img/user-exam-main-bg.png") no-repeat;
+    background-size: cover;
+    width: 80%;
+    height: 600px;
+    border: 3px solid #5bc0de;
+    margin-top: 70px;
+    margin-left: 10%;
+}
+
+.border{
+    height: 10px;
+    width: 120px;
+    background-color: #ecd7a4;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.title-border{
+    height: 5px;
+    width: 120px;
+    background-color: #ecd7a4;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.exam-box{
+    overflow-y: scroll;
+    height: 80%;
+    width: 100%;
+    border: 2px solid #e8f1e5;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin: 0 auto;
+    grid-column-gap: 30px;
+    /*text-align: center;*/
+}
+.exam-box::-webkit-scrollbar{width: 0!important}
+.exam-box{
+    -ms-overflow-style: none;
+}
+.exam-box{
+    overflow: -moz-scrollbars-none;
+}
+
+.exam-box-card{
+    box-shadow: 0px 0px 15px #ecf8da;
+    margin-top: 20px;
+}
+
+.exam-box-card:hover{
+    box-shadow: 0px 0px 50px #f5f59c;
+    cursor: pointer;
+}
+
+.exam-box-card-title{
+    background-color: #fff;
+    height: 50px;
+    text-align: center;
+}
+
+.exam-bg{
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.exam-name{
+    height: 30px;
+    width: 200px;
+    font-family: '楷体',"Kristen ITC";
+    font-size: 20px;
+    margin: 0 auto;
+}

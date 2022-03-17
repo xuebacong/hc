@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>单选题</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/admin-main.css" type="text/css">
+</head>
+<body>
+
+<div th:replace="admin::navbar"></div>
+
+<!--右边的内容-->
+<div class="w2">
+    <div class="w1">
+
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th style="width: 15%;height: 60px">序号</th>
+                <th style="width: 25%">试卷名</th>
+                <th style="width: 20%">试卷id</th>
+                <th style="width: 15%">试卷性质</th>
+                <th >按钮</th>
+            </tr>
+            <tr th:each="Test,state:${myPage.rows}">
+
+                <td id="index" th:text="(${myPage.current-1})*${myPage.getPageSize()}+${state.index}+1" ></td>
+                <td><textarea disabled style="width: 100%" th:text="${Test.testName}"></textarea></td>
+                <td><textarea disabled style="width: 100%" th:text="${Test.testId}"></textarea></td>
+                <td><textarea disabled style="width: 100%" th:if="${Test.isOnline}==1">在线考试</textarea>
+                    <textarea disabled style="width: 100%" th:if="${Test.isOnline}==0">普通试题</textarea></td>
+                <td>
+
+                    <button class="btn btn-primary btn-lg"
+                            th:onclick="deleteTest([[${Test.testId}]])">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    当前页数<a th:text="'    '+${myPage.current}"></a><a>/</a><a th:text="${myPage.totalPages}"></a>
+                </td>
+                <td>
+                    <button  >
+                        <a th:href="@{'findTest?current='+1}" >首页</a>
+                    </button >
+<!--                    <span style="padding-left: 40px"></span>-->
+                    <button >
+                        <a  th:href="@{'findTest?current='+${myPage.current-1}}">上一页</a>
+                    </button>
+
+<!--                    <span style="padding-left: 70px"></span>-->
+                    <input type="number" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"  min=1 step =1 style="width:50px;border: solid black"
+                           name="current" id="current" th:value="${myPage.current}">
+                    <button type="submit" th:onclick="skipTo()" >跳转到</button>
+
+<!--                    <span style="padding-left: 70px"></span>-->
+                    <td>
+                    <button>
+                        <a  th:href="@{'findTest?current='+${myPage.current+1}}">下一页</a>
+                    </button>
+<!--                    <span style="padding-left: 40px"></span>-->
+                    <button>
+                        <a  th:href="@{'findTest?current='+${myPage.totalPages}}">尾页</a>
+                    </button>
+            </td>
+
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+</body>
+
+<!--用于单选题编辑修改删除的js-->
+<script th:inline="javascript">
+
+
+    function deleteTest(testId){
+        var index =[[${myPage.current}]];
+        if(window.confirm("确定删除吗？")){
+            $.ajax({
+                url:"/deleteTest?testId="+testId,
+                type:"get",
+                dataType:"json",
+                success:function (flag){
+                    if(flag==0)
+                    {
+                        alert("这张试卷存在学生成绩，请先清空与此试卷有关成绩")
+                    }
+                    if(flag==-1)
+                    {
+                        alert("这张试卷有学生在做，无法删除")
+                    }
+                    window.location.href="/findTest?current="+index;
+                }
+            })
+        }
+    }
+    function skipTo(){
+        var current = $("#current").val();
+        window.location.href="/findTest?current="+current;
+    }
+
+</script>
+
+</html>

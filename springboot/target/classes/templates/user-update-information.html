@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--    ok-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css4.css">
+    <title>个人信息</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div th:replace="user-main::navbar"></div>
+<div class="bodyer" >
+    <div class="view-main">
+        <h2>个人信息</h2>
+        <div class="border"></div>
+        <div class="list">
+            <form class="contact-form" action="contact-us.html" method="post">
+                <span class="UpdateSpan">用户名</span>
+                <input  type="text" class="contact-form-text " th:value="${uname}" th:placeholder="${uname}" id="UserName" readonly="readonly">
+
+
+                <span class="UpdateSpan">用户年级</span>
+                <input  type="text" class="contact-form-text contact-form-text-update"  th:value="${userInfo.userDivision}" th:placeholder="${userInfo.userDivision}" id="userDivision" readonly="readonly">
+
+                <span class="UpdateSpan">所在班级</span>
+                <input  type="text" class="contact-form-text contact-form-text-update" th:value="${userInfo.userClass}" th:placeholder="${userInfo.userClass}" id="UserClass" readonly="readonly">
+
+                <span class="UpdateSpan">所在学校</span>
+                <input  type="text" class="contact-form-text contact-form-text-update" th:value="${userInfo.userSchool}" th:placeholder="${userInfo.userSchool}" id="UserCollege" readonly="readonly">
+
+                <span class="UpdateSpan">请输入旧密码</span>
+                <input type="text" class="contact-form-text contact-form-text-update" placeholder="原本密码" id="UserPassword" readonly="readonly">
+
+                <span class="UpdateSpan">新的密码</span>
+                <input  type="text" class="contact-form-text contact-form-text-update" placeholder="新的密码" id="UserUpdatePassword" readonly="readonly">
+
+                <span class="UpdateSpan">确认密码</span>
+                <input  type="text" class="contact-form-text contact-form-text-update" placeholder="确认密码" id="UserConfirmPassword" readonly="readonly">
+            </form>
+        </div>
+        <input type="button" class="contact-form-btn" value="修改信息" onclick="gb();">
+        <input type="button" class="contact-form-btn" value="确认提交" onclick="updateInfo()">
+        <a href="/exitUser"><button class="contact-form-btn" >退出登录</button></a>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="js/user-update-information.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+
+    function updateInfo(){
+        var uname =$("#UserName").val();
+        var password=$("#UserPassword").val();
+        var userDivision =$("#userDivision").val();
+        var userClass=$("#UserClass").val();
+        var userSchool=$("#UserCollege").val();
+        var newPassword=$("#UserUpdatePassword").val();
+        var confirmPassword=$("#UserConfirmPassword").val();
+        if(newPassword!=confirmPassword)
+        {
+            alert("两次密码输入不一致");
+            window.location.href="/updateInfo";
+        }
+        // alert(newPassword+'  '+confirmPassword+userSchool)
+        //alert(userDivision);
+        //alert(newPassword)
+        $.ajax({
+            url:"/checkPassword/",
+            type:"get",
+            data:{"uname":uname,"password":password},
+            success:function (a){
+                if(a==1){
+                   // alert("成功了");
+                    $.ajax({
+                        url:"/updateUserInfo/",
+                        type: "get",
+                        data:{"uname":uname,"userDivision":userDivision,"userClass":userClass,"userSchool":userSchool,"newPassword":newPassword},
+                        success:function (a){
+                            alert("修改个人信息成功");
+                        }
+                    })
+                }else{
+                    alert("旧密码输入错误");
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/user-exam.css">
+
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="user-main::navbar"></div>
+<div>
+    <div class="bodyer">
+        <div class="bodyer-time" id="area">
+            <!--                悬浮框内容：时钟-->
+            <div class="time-box" id="clock">
+                <div id="time">
+                    <div>
+                        <span id="hours">00</span>
+                        <span>Hours</span>
+                    </div>
+                    <div>
+                        <span id="minutes">00</span>
+                        <span>Minutes</span>
+                    </div>
+                    <div>
+                        <span id="seconds">00</span>
+                        <span>Seconds</span>
+                    </div>
+                </div>
+            </div>
+            <!--                悬浮按钮-->
+            <div id="on" onclick="xuanfu();">
+                <p>时钟</p>
+            </div>
+        </div>
+        <div class="bodyer-bg">
+            <div class="exam-really-bg">
+                <div class="select-ul">
+                    <ul>
+                        <li class="litest">单选</li>
+                        <li class="litest">多选</li>
+                        <li class="litest">填空</li>
+                    </ul>
+                </div>
+
+                <form class="select-main"  th:object="${form}">
+                    <!--                        <input   hidden th:value="${form.testId}" ></input>-->
+                    <div class="select-test-question" style="display: block" >
+                        <div class="single-choice" th:each="Single,state:*{singleList}" >
+                            <table style="margin-left: 15%;margin-top: 10px">
+                                <label style="font-size: 25px;margin: 0 auto;margin-top: 15px">单选题<label th:text="${state.index}+1"></label></label>
+                                <div class="border"></div>
+                                <tr>
+
+                                    <input   hidden  th:field="*{singleList[__${state.index}__].singleId}"></input>
+                                    <td class="title-left"><label>题目内容</label></td>
+                                    <td class="title-right"><textarea class="title-content" disabled th:field="*{singleList[__${state.index}__].singleQuestion}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label >选项A</label></td>
+                                    <td class="title-right"><textarea class="title-A" disabled th:field="*{singleList[__${state.index}__].singleA}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项B</label></td>
+                                    <td class="title-right"><textarea class="title-B" disabled th:field="*{singleList[__${state.index}__].singleB}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项C</label></td>
+                                    <td class="title-right"><textarea class="title-C" disabled th:field="*{singleList[__${state.index}__].singleC}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项D</label> </td>
+                                    <td class="title-right"><textarea class="title-D" disabled th:field="*{singleList[__${state.index}__].singleD}"></textarea></td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td class="title-left"><label>你的选择</label></td>-->
+<!--                                    <td class="title-right">-->
+<!--                                        <select autofocus class="student-select" th:field="*{singleList[__${state.index}__].singleAnswer}">-->
+<!--                                            <option value="A" >A</option>-->
+<!--                                            <option value="B" >B</option>-->
+<!--                                            <option value="C">C</option>-->
+<!--                                            <option value="D">D</option>-->
+<!--                                        </select>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                                <tr>
+                                    <td class="title-left"><label>参考答案</label></td>
+                                    <td class="title-right"><textarea style="text-align: center" th:field="*{singleList[__${state.index}__].singleAnswer}" class="answer" disabled></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="select-test-question">
+                        <div class="multiple-choice" th:each="Multiple,state:*{multipleList}">
+                            <table style="margin-left: 15%;margin-top: 10px">
+                                <label style="font-size: 25px;margin: 0 auto;margin-top: 15px">多选题<label th:text="${state.index}+1"></label></label>
+                                <div class="border"></div>
+                                <tr>
+                                    <input   hidden  th:field="*{multipleList[__${state.index}__].multipleId}"></input>
+                                    <td class="title-left"><label >题目内容</label></td>
+                                    <td class="title-right"><textarea class="title-content" disabled th:field="*{multipleList[__${state.index}__].multipleQuestion}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项A</label></td>
+                                    <td class="title-right"><textarea class="title-A" disabled th:field="*{multipleList[__${state.index}__].multipleA}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项B</label></td>
+                                    <td class="title-right"><textarea class="title-B" disabled th:field="*{multipleList[__${state.index}__].multipleB}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项C</label></td>
+                                    <td class="title-right"><textarea class="title-C" disabled th:field="*{multipleList[__${state.index}__].multipleC}"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td class="title-left"><label>选项D</label> </td>
+                                    <td class="title-right"><textarea class="title-D" disabled th:field="*{multipleList[__${state.index}__].multipleD}"></textarea></td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td class="title-left"><label>你的选择</label></td>-->
+<!--                                    <td class="title-right">-->
+<!--                                        <select autofocus class="student-select" th:field="*{multipleList[__${state.index}__].multipleAnswer}">-->
+<!--                                            <option value="AB">AB</option>-->
+<!--                                            <option value="AC">AC</option>-->
+<!--                                            <option value="AD">AD</option>-->
+<!--                                            <option value="BC">BC</option>-->
+<!--                                            <option value="BD">BD</option>-->
+<!--                                            <option value="CD">CD</option>-->
+<!--                                            <option value="ABC">ABC</option>-->
+<!--                                            <option value="ABD">ABD</option>-->
+<!--                                            <option value="ACD">ACD</option>-->
+<!--                                            <option value="BCD">BCD</option>-->
+<!--                                            <option value="ABCD">ABCD</option>-->
+<!--                                        </select>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                                <tr>
+                                    <td class="title-left"><label>参考答案</label></td>
+                                    <td class="title-right"><textarea style="text-align: center" th:field="*{multipleList[__${state.index}__].multipleAnswer}" class="answer" disabled></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="select-test-question">
+                        <div class="fill-in-the-blanks" th:each="Fill,state:*{fillList}">
+                            <table style="margin-left: 15%;margin-top: 10px">
+                                <label style="font-size: 25px;margin: 0 auto;margin-top: 15px">填空题<label th:text="${state.index}+1"></label></label>
+                                <div class="border"></div>
+                                <tr>
+                                    <input   hidden  th:field="*{fillList[__${state.index}__].fillId}"></input>
+                                    <td class="title-left"><label>题目内容</label></td>
+                                    <td class="title-right">
+                                        <textarea class="title-content" disabled th:field="*{fillList[__${state.index}__].fillQuestion}"></textarea>
+                                    </td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td class="title-left"><label>你的答案</label></td>-->
+<!--                                    <td class="title-right">-->
+<!--                                        <input type="text" class="title-fill-in" th:field="*{fillList[__${state.index}__].fillAnswer}">-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                                <tr>
+                                    <td class="title-left"><label>参考答案</label></td>
+                                    <td class="title-right"><textarea style="text-align: center" th:field="*{fillList[__${state.index}__].fillAnswer}" class="answer" disabled></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" style="margin-left: 140px;border-radius: 10px;width: 80px;height: 40px"><a href="/userNormalMain">返回题库</a></button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/user-exam.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--    <script src="js/jquery-3.2.1.min.js"></script>-->
+<!--    <script src="js/bootstrap-js/bootstrap.min.js"></script>-->
+</body>
+</html>

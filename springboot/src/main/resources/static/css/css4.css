@@ -1,0 +1,264 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    background-color: #f2f4f6;
+}
+
+.header{
+    background-color: rgba(116, 148, 201, 0.3);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.header-wrap{
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+
+.header-loge{
+    background: url("../img/logo.png") left center no-repeat;
+    width: 160px;
+    height: 40px;
+    background-size: 120px 40px;
+    position: absolute;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #fff;
+    text-indent: 50px;
+    line-height: 40px;
+    top: 50%;
+    margin-top: -20px;
+    left: 20px;
+}
+
+.header-nav{
+    position: absolute;
+    height: 40px;
+    right: 30px;
+    top:50%;
+    margin-top: -20px;
+}
+
+.header-nav-item{
+    color: #fff;
+    display: block;
+    position: relative;
+    padding-left: 40px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 40px;
+    float: left;
+}
+
+.header-nav-item:hover{
+    color: #f01400;
+    /*color:#fff;*/
+}
+
+.header-nav-item-study-now{
+    background: #f00;
+    text-align: center;
+    width: 94px;
+    border-radius: 3px;
+    padding: 0;
+    margin-left: 40px;
+}
+
+.header-nav-item-study-now:hover{
+    box-shadow: 0px 0px 10px #f06;
+    transition: all .5s;
+    color: #fff;
+}
+
+.header-nav-tip{
+    width: 48px;
+    height: 2px;
+    position: absolute;
+    background-color: #f00;
+    bottom: 0;
+    left: 0;
+    transition: all .5s;
+    margin-left: 40px;
+}
+
+.header{
+    transition: all 1s;
+}
+
+.header-status-white{
+    background-color: rgba(255,255,255,.9);
+    top:0;
+    right: 0;
+    left: 0;
+}
+
+.header-status-white .header-nav-item,
+.header-status-white .header-loge{
+    color: #000;
+}
+
+.header-status-white .header-nav-item-status-active{
+    color: #f01400;
+}
+
+.header-nav-item-status-active{
+    color: #f01400;
+}
+
+.header-status-white .header-nav-item:hover{
+    transition: all 1s;
+    color: red;
+}
+
+.header-status-white .header-nav-item-study-now:hover{
+    color: #fff;
+}
+
+.bodyer{
+    background-color: #fff;
+    height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background: url("../img/admin-update-information.png") center no-repeat ;
+    background-size: cover;
+    display: table;
+}
+
+.view-main{
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    margin-top: 70px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+
+.list{
+    overflow-y: scroll;
+    width: 100%;
+    height: 450px;
+}
+
+.list::-webkit-scrollbar{width: 0!important}
+.list{
+    -ms-overflow-style: none;
+}
+.list{
+    overflow: -moz-scrollbars-none;
+}
+
+.view-main h2{
+    text-align: center;
+    color: #295a7d;
+}
+
+.border{
+    width: 100px;
+    height: 10px;
+    background: #34495e;
+    margin: 0 auto;
+}
+
+.contact-form{
+    max-width: 600px;
+    margin: auto;
+    padding: 0 10px;
+    overflow: hidden;
+}
+
+.contact-form-text{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 16px 0;
+    border: 0;
+    background: rgba(224, 227, 232, 0.6);
+    padding: 20px 0px;
+    outline: none;
+    color: #111;
+    transition: 0.5s;
+}
+
+.contact-form-text:hover{
+    box-shadow: 0 0 10px 4px #5128d2;
+}
+
+textarea.contact-form-text{
+    resize: none;
+    height: 120px;
+}
+
+/*.contact-form-btn{*/
+/*    text-align: center;*/
+/*    border: 0;*/
+/*    background: #fff;*/
+/*    color: black;*/
+/*    padding: 12px 50px;*/
+/*    border-radius: 20px;*/
+/*    cursor: pointer;*/
+/*    transition: 0.5s;*/
+/*    margin-left: 230px;*/
+/*    margin-top: 10px;*/
+/*}*/
+.contact-form-btn{
+    /*left: 10%;*/
+    text-align: center;
+    border: 0;
+    background: #fff;
+    color: black;
+    padding: 12px 50px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-left: 200px;
+    margin-top: 10px;
+}
+
+.contact-form-btn:hover{
+    background: #74b2db;
+}
+
+.UpdateSpan{
+    color: #fff;
+}
+
+.footer{
+    background-color: #c1faae;
+    height: 108px;
+    position: relative;
+}
+
+.footer-link{
+    position: absolute;
+    top: 30px;
+    margin-left: 50%;
+    left: -262px;
+    color: black;
+}
+
+.footer-link a:hover{
+    color: #f01400;
+}
+
+.footer p{
+    color: white;
+    position: absolute;
+    top: 60px;
+    font-size: 14px;
+    color: #787d82;
+    left: 50%;
+    margin-left: -122px;
+}
